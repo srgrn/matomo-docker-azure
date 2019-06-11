@@ -86,10 +86,15 @@ RUN set -ex; \
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+COPY ssh_setup.sh /tmp
+RUN chmod -R +x /tmp/ssh_setup.sh \
+   && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
+
 # WORKDIR is /var/www/html (inherited via "FROM php")
 # "/entrypoint.sh" will populate it at container startup from /usr/src/piwik
 VOLUME /var/www/html
-
+ENV SSH_PORT 2222
 EXPOSE 2222
 
 ENTRYPOINT ["/entrypoint.sh"]
