@@ -85,7 +85,7 @@ RUN set -ex; \
 	rm -rf GeoIPCity*
 
 COPY docker-entrypoint.sh /entrypoint.sh
-
+RUN chmod +x /entrypoint.sh
 # WORKDIR is /var/www/html (inherited via "FROM php")
 # "/entrypoint.sh" will populate it at container startup from /usr/src/piwik
 VOLUME /var/www/html
